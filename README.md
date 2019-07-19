@@ -1,4 +1,4 @@
-# hava_negar
+# Hava Negar - هوا نگار
 
 a simple weather app
 
