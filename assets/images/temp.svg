@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="7.615" height="18" viewBox="0 0 7.615 18">
-  <g id="_1493748090_weather_icons-63" data-name="1493748090_weather_icons-63" transform="translate(-37 -22)">
-    <g id="Group_33" data-name="Group 33" transform="translate(37 22)">
-      <path id="Path_108" data-name="Path 108" d="M44.731,58a1.731,1.731,0,1,0,1.731,1.731A1.733,1.733,0,0,0,44.731,58Zm0,2.077a.346.346,0,1,1,.346-.346A.346.346,0,0,1,44.731,60.077Z" transform="translate(-40.923 -45.538)" fill="#4e4e4e"/>
-      <path id="Path_109" data-name="Path 109" d="M43.58,33.582l0-8.813a2.769,2.769,0,0,0-5.538,0l0,8.813a3.808,3.808,0,1,0,5.545,0Zm-2.772,5.033a2.423,2.423,0,0,1-1.618-4.228.693.693,0,0,0,.229-.515l0-9.1a1.385,1.385,0,1,1,2.769,0l0,9.1a.691.691,0,0,0,.23.515,2.423,2.423,0,0,1-1.618,4.228Z" transform="translate(-37 -22)" fill="#4e4e4e"/>
-    </g>
-  </g>
-</svg>
