@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hava_negar/pages/home_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -19,12 +20,9 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.blue,
+        fontFamily: "Vazir"
       ),
-      home: Scaffold(
-        body: Center(
-          child: Text("Hello Hava Negar babeeeeeee"),
-        ),
-      ),
+      home: new Directionality(textDirection: TextDirection.rtl, child: HomePage()),
     );
   }
 }

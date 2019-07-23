@@ -17,6 +17,9 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  fl_chart: ^0.1.5
+  flutter_svg: ^0.13.1
+  location: ^2.3.5
   flutter:
     sdk: flutter
 
@@ -41,9 +44,23 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #  - images/a_dot_burr.jpeg
-  #  - images/a_dot_ham.jpeg
+  assets:
+    - assets/images/light/light_sun.svg
+    - assets/images/light/mark_place.svg
+    - assets/images/light/hot_temp.png
+    - assets/images/light/cold_temp.png
+    - assets/images/light/sun.svg
+    - assets/images/light/sunrise.svg
+    - assets/images/light/sunset.svg
+    - assets/images/light/wind.svg
+
+    - assets/images/dark/mark_place.svg
+    - assets/images/dark/hot_temp.png
+    - assets/images/dark/cold_temp.png
+    - assets/images/dark/sun.svg
+    - assets/images/dark/sunrise.svg
+    - assets/images/dark/sunset.svg
+    - assets/images/dark/wind.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -56,10 +73,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: Vazir
+      fonts:
+        - asset: assets/fonts/Vazir.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
