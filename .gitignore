@@ -9,6 +9,9 @@
 .history
 .svn/
 
+# API KEYS
+/lib/services/api_key.dart
+
 # IntelliJ related
 *.iml
 *.ipr
@@ -68,8 +71,3 @@
 !**/ios/**/default.pbxuser
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
-
-# lib/services/api_key.dart
-config:
-    api_stuffs:
-        geoKey: #
