@@ -2,33 +2,44 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hava_negar/services/location_service.dart';
+import 'package:hava_negar/services/weather-service.dart';
 
-
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   String cityName, highTemp, lowTemp, temperature, weatherStatus;
   String sunRise, sunSet, wind;
+  var scaffoldKey;
 
-  HomePage({
-    this.cityName = "Kerman",
-    this.highTemp = "40",
-    this.lowTemp = "30",
-    this.temperature = "38",
-    this.weatherStatus = "Sunny",
-    this.sunRise = "5.40",
-    this.sunSet = "7.20",
-    this.wind = "20",
-  });
-
-  @override
-  State<StatefulWidget> createState() => HomePageState();
-}
-
-class HomePageState extends State<HomePage> {
   var screenSize;
   bool isDarkMode = false;
 
+  HomePage(
+      {this.cityName = "Tehran",
+      this.highTemp = "40",
+      this.lowTemp = "30",
+      this.temperature = "38",
+      this.weatherStatus = "Sunny",
+      this.sunRise = "5.40",
+      this.sunSet = "7.20",
+      this.wind = "20",
+      @required this.scaffoldKey,
+        this.isDarkMode = false,
+      });
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    screenSize = MediaQuery.of(context).size;
+    //LocationService().getLocation();
+    return ListView.builder(
+        itemCount: 1,
+        itemBuilder: (BuildContext context, int index) {
+          return _body();
+        });
+  }
+
   _body() {
     return Stack(
+      alignment: Alignment.center,
       children: <Widget>[
         Transform(
           child: Center(
@@ -42,7 +53,7 @@ class HomePageState extends State<HomePage> {
         Align(
           alignment: Alignment.centerRight,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
               /// City name section.
               Container(
@@ -50,30 +61,29 @@ class HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Container(
-                      margin: const EdgeInsets.only(top: 40, right: 50),
+                        margin: const EdgeInsets.only(top: 5, left: 25),
+                        child: GestureDetector(
+                          child: Icon(Icons.dehaze, size: 30, color: Colors.grey[600]),
+                          onTap: () {
+                            this.scaffoldKey.currentState.openDrawer();
+                          },
+                        )),
+                    Container(
+                      margin: const EdgeInsets.only(top: 5, right: 50),
                       child: Row(
                         children: <Widget>[
                           Text(
-                            widget.cityName,
-                            style: TextStyle(
-                              fontSize: 30,
-                            ),
+                            cityName,
+                            style: TextStyle(fontSize: 30, color: Colors.grey[600]),
                           ),
                           Padding(
                             child: SvgPicture.asset(
-                              isDarkMode ? "assets/images/dark/mark_place.svg" : "assets/images/light/mark_place.svg",
-                              width: 20,
-                            ),
-                            padding: const EdgeInsets.only(right: 8, bottom: 4),
+                                isDarkMode ? "assets/images/dark/mark_place.svg" : "assets/images/light/mark_place.svg",
+                                width: 20,
+                                color: Colors.grey[600]),
+                            padding: const EdgeInsets.only(left: 8, bottom: 4),
                           ),
                         ],
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 40, left: 25),
-                      child: Icon(
-                        Icons.dehaze,
-                        size: 30,
                       ),
                     ),
                   ],
@@ -84,17 +94,20 @@ class HomePageState extends State<HomePage> {
               Container(
                 margin: const EdgeInsets.only(right: 15),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    Text("\u2103" + widget.highTemp),
-                    Image.asset(
-                      isDarkMode ? "assets/images/dark/hot_temp.png" : "assets/images/light/hot_temp.png",
-                      width: 20,
+                    Image.asset(isDarkMode ? "assets/images/dark/hot_temp.png" : "assets/images/light/hot_temp.png",
+                        width: 20, color: Colors.grey[600]),
+                    Text(
+                      highTemp + "\u2103",
+                      style: TextStyle(color: Colors.grey[600]),
                     ),
                     Text(" / "),
-                    Text("\u2103" + widget.lowTemp),
-                    Image.asset(
-                      isDarkMode ? "assets/images/dark/cold_temp.png" : "assets/images/light/cold_temp.png",
-                      width: 20,
+                    Image.asset(isDarkMode ? "assets/images/dark/cold_temp.png" : "assets/images/light/cold_temp.png",
+                        width: 20, color: Colors.grey[600]),
+                    Text(
+                      lowTemp + "\u2103",
+                      style: TextStyle(color: Colors.grey[600]),
                     ),
                   ],
                 ),
@@ -105,6 +118,7 @@ class HomePageState extends State<HomePage> {
                 margin: const EdgeInsets.only(right: 10, top: 0, bottom: 0),
                 padding: const EdgeInsets.all(0),
                 child: Stack(
+                  alignment: Alignment.centerRight,
                   children: <Widget>[
                     Positioned(
                       child: Text(
@@ -130,7 +144,7 @@ class HomePageState extends State<HomePage> {
                     Padding(
                       padding: const EdgeInsets.only(right: 25, bottom: 0, top: 0),
                       child: Text(
-                        widget.temperature,
+                        temperature,
                         maxLines: 1,
                         style: TextStyle(
                           fontSize: 110,
@@ -148,7 +162,7 @@ class HomePageState extends State<HomePage> {
               Container(
                 margin: const EdgeInsets.only(right: 22),
                 child: Text(
-                  widget.weatherStatus,
+                  weatherStatus,
                   style: TextStyle(fontSize: 28, color: Colors.grey[600]),
                 ),
               ),
@@ -164,7 +178,7 @@ class HomePageState extends State<HomePage> {
                       color: Colors.grey[700],
                     ),
                     Text(
-                      widget.sunRise+"am",
+                      sunRise,
                       style: TextStyle(color: Colors.grey[600]),
                     ),
                   ],
@@ -182,7 +196,7 @@ class HomePageState extends State<HomePage> {
                       color: Colors.grey[700],
                     ),
                     Text(
-                      widget.sunSet+"pm",
+                      sunSet,
                       style: TextStyle(color: Colors.grey[600]),
                     ),
                   ],
@@ -200,7 +214,7 @@ class HomePageState extends State<HomePage> {
                       color: Colors.grey[700],
                     ),
                     Text(
-                      widget.wind+"m/s",
+                      wind + "m/s",
                       style: TextStyle(color: Colors.grey[600]),
                     ),
                   ],
@@ -221,18 +235,6 @@ class HomePageState extends State<HomePage> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    screenSize = MediaQuery.of(context).size;
-    LocationService().getLocation();
-    print(screenSize.height);
-
-    return Scaffold(
-      body: _body(),
-    );
-  }
-
   _chart() {
     return FlChart(
       chart: LineChart(
@@ -241,35 +243,41 @@ class HomePageState extends State<HomePage> {
           borderData: FlBorderData(show: false),
           gridData: FlGridData(show: false),
           titlesData: FlTitlesData(
-            show: true,
-            bottomTitles: SideTitles(
-              showTitles: true,
-                getTitles: (val) {
-                  switch (val.toInt()) {
-                    case 0:
-                      return '00:00';
-                    case 1:
-                      return '04:00';
-                    case 2:
-                      return '08:00';
-                    case 3:
-                      return '12:00';
-                    case 4:
-                      return '16:00';
-                    case 5:
-                      return '20:00';
-                    case 6:
-                      return '23:59';
-                    case 7:
-                      return '12';
-                  }
-                  return '';
-                }
-            ),
-            leftTitles: SideTitles(showTitles: false)
-          ),
+              show: true,
+              bottomTitles: SideTitles(
+                  showTitles: true,
+                  getTitles: (val) {
+                    switch (val.toInt()) {
+                      case 0:
+                        return '12';
+                      case 1:
+                        return '12';
+                      case 2:
+                        return '12';
+                      case 3:
+                        return '12';
+                      case 4:
+                        return '12';
+                      case 5:
+                        return '20';
+                      case 6:
+                        return '23';
+                      case 7:
+                        return '12';
+                      case 8:
+                        return '12';
+                      case 9:
+                        return '12';
+                      case 10:
+                        return '12';
+                      case 11:
+                        return '12';
+                    }
+                    return '';
+                  }),
+              leftTitles: SideTitles(showTitles: false)),
           lineTouchData: const LineTouchData(
-              enabled: false,
+            enabled: false,
           ),
           lineBarsData: [
             LineChartBarData(
@@ -281,7 +289,11 @@ class HomePageState extends State<HomePage> {
                 FlSpot(4, 3.5),
                 FlSpot(5, 5),
                 FlSpot(6, 8),
-                FlSpot(7, 5),
+                FlSpot(7, 8),
+                FlSpot(8, 4),
+                FlSpot(9, 5),
+                FlSpot(10, 3),
+                FlSpot(11, 3),
               ],
               colors: [Colors.grey[600]],
               isCurved: true,
@@ -289,11 +301,7 @@ class HomePageState extends State<HomePage> {
               belowBarData: BelowBarData(
                 show: false,
               ),
-              dotData: FlDotData(
-                  show: true,
-                dotColor: Colors.yellow[600],
-                dotSize: 6
-              ),
+              dotData: FlDotData(show: true, dotColor: Colors.yellow[600], dotSize: 6),
             ),
           ],
         ),

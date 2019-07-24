@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hava_negar/pages/home_page.dart';
 
+import 'initial.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -8,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'هوانگار',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -22,7 +24,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: "Vazir"
       ),
-      home: new Directionality(textDirection: TextDirection.rtl, child: HomePage()),
+      home: Initial(),
     );
   }
 }
