@@ -10,7 +10,7 @@
 .svn/
 
 # API KEYS
-lib/services/api_key.dart
+/lib/services/api_key.dart
 
 # IntelliJ related
 *.iml
