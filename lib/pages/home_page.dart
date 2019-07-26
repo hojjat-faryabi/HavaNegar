@@ -9,20 +9,23 @@ class HomePage extends StatelessWidget {
   String sunRise, sunSet, wind;
   var scaffoldKey;
 
+  final String mainImage;
+
   var screenSize;
-  bool isDarkMode = false;
+  bool isDarkMode;
 
   HomePage(
-      {this.cityName = "Tehran",
-      this.highTemp = "40",
-      this.lowTemp = "30",
-      this.temperature = "38",
-      this.weatherStatus = "Sunny",
-      this.sunRise = "5.40",
-      this.sunSet = "7.20",
-      this.wind = "20",
+      {this.cityName,
+      this.highTemp,
+      this.lowTemp,
+      this.temperature,
+      this.weatherStatus,
+      this.sunRise,
+      this.sunSet,
+      this.wind,
       @required this.scaffoldKey,
-        this.isDarkMode = false,
+      this.isDarkMode,
+        this.mainImage,
       });
 
   @override
@@ -33,7 +36,12 @@ class HomePage extends StatelessWidget {
     return ListView.builder(
         itemCount: 1,
         itemBuilder: (BuildContext context, int index) {
-          return _body();
+          return Container(
+            color: isDarkMode
+                ? Colors.grey[800]
+                : Colors.white70,
+            child: _body(),
+          );
         });
   }
 
@@ -44,7 +52,9 @@ class HomePage extends StatelessWidget {
         Transform(
           child: Center(
             child: SvgPicture.asset(
-              "assets/images/light/light_sun.svg",
+              isDarkMode
+                ?"assets/images/dark/$mainImage"
+                :"assets/images/light/$mainImage",
               width: screenSize.width,
             ),
           ),
@@ -63,7 +73,13 @@ class HomePage extends StatelessWidget {
                     Container(
                         margin: const EdgeInsets.only(top: 5, left: 25),
                         child: GestureDetector(
-                          child: Icon(Icons.dehaze, size: 30, color: Colors.grey[600]),
+                          child: Icon(
+                              Icons.dehaze,
+                              size: 30, 
+                              color: isDarkMode
+                                ? Colors.white70
+                                : Colors.grey[600],
+                          ),
                           onTap: () {
                             this.scaffoldKey.currentState.openDrawer();
                           },
@@ -74,13 +90,21 @@ class HomePage extends StatelessWidget {
                         children: <Widget>[
                           Text(
                             cityName,
-                            style: TextStyle(fontSize: 30, color: Colors.grey[600]),
+                            style: TextStyle(
+                                fontSize: 30,
+                              color: isDarkMode
+                                  ? Colors.white70
+                                  : Colors.grey[600],
+                            ),
                           ),
                           Padding(
                             child: SvgPicture.asset(
                                 isDarkMode ? "assets/images/dark/mark_place.svg" : "assets/images/light/mark_place.svg",
                                 width: 20,
-                                color: Colors.grey[600]),
+                              color: isDarkMode
+                                  ? Colors.white70
+                                  : Colors.grey[600],
+                            ),
                             padding: const EdgeInsets.only(left: 8, bottom: 4),
                           ),
                         ],
@@ -97,17 +121,29 @@ class HomePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     Image.asset(isDarkMode ? "assets/images/dark/hot_temp.png" : "assets/images/light/hot_temp.png",
-                        width: 20, color: Colors.grey[600]),
+                        width: 20,
+                      color: isDarkMode
+                          ? Colors.white70
+                          : Colors.grey[600],
+                    ),
                     Text(
                       highTemp + "\u2103",
-                      style: TextStyle(color: Colors.grey[600]),
+                      style: TextStyle(                              color: isDarkMode
+                          ? Colors.white70
+                          : Colors.grey[600],),
                     ),
                     Text(" / "),
                     Image.asset(isDarkMode ? "assets/images/dark/cold_temp.png" : "assets/images/light/cold_temp.png",
-                        width: 20, color: Colors.grey[600]),
+                        width: 20,
+                      color: isDarkMode
+                          ? Colors.white70
+                          : Colors.grey[600],
+                    ),
                     Text(
                       lowTemp + "\u2103",
-                      style: TextStyle(color: Colors.grey[600]),
+                      style: TextStyle(                              color: isDarkMode
+                          ? Colors.white70
+                          : Colors.grey[600],),
                     ),
                   ],
                 ),
@@ -125,7 +161,9 @@ class HomePage extends StatelessWidget {
                         "c",
                         style: TextStyle(
                           fontSize: 50,
-                          color: Colors.grey[600],
+                          color: isDarkMode
+                              ? Colors.white70
+                              : Colors.grey[600],
                         ),
                       ),
                       top: 45,
@@ -135,7 +173,9 @@ class HomePage extends StatelessWidget {
                         "\u02DA",
                         style: TextStyle(
                           fontSize: 100,
-                          color: Colors.grey[600],
+                          color: isDarkMode
+                              ? Colors.white70
+                              : Colors.grey[600],
                         ),
                       ),
                       top: 2,
@@ -149,7 +189,9 @@ class HomePage extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 110,
                           fontWeight: FontWeight.bold,
-                          color: Colors.grey[600],
+                          color: isDarkMode
+                              ? Colors.white70
+                              : Colors.grey[600],
                           inherit: false,
                         ),
                       ),
@@ -163,7 +205,11 @@ class HomePage extends StatelessWidget {
                 margin: const EdgeInsets.only(right: 22),
                 child: Text(
                   weatherStatus,
-                  style: TextStyle(fontSize: 28, color: Colors.grey[600]),
+                  style: TextStyle(fontSize: 28,
+                    color: isDarkMode
+                        ? Colors.white70
+                        : Colors.grey[600],
+                  ),
                 ),
               ),
 
@@ -175,11 +221,17 @@ class HomePage extends StatelessWidget {
                     SvgPicture.asset(
                       isDarkMode ? "assets/images/dark/sunrise.svg" : "assets/images/light/sunrise.svg",
                       width: 40,
-                      color: Colors.grey[700],
+                        color: isDarkMode
+                            ? Colors.white70
+                            : Colors.grey[700],
                     ),
                     Text(
                       sunRise,
-                      style: TextStyle(color: Colors.grey[600]),
+                      style: TextStyle(
+                        color: isDarkMode
+                            ? Colors.white70
+                            : Colors.grey[600],
+                      ),
                     ),
                   ],
                 ),
@@ -193,11 +245,17 @@ class HomePage extends StatelessWidget {
                     SvgPicture.asset(
                       isDarkMode ? "assets/images/dark/sunset.svg" : "assets/images/light/sunset.svg",
                       width: 40,
-                      color: Colors.grey[700],
+                        color: isDarkMode
+                            ? Colors.white70
+                            : Colors.grey[600],
                     ),
                     Text(
                       sunSet,
-                      style: TextStyle(color: Colors.grey[600]),
+                      style: TextStyle(
+                        color: isDarkMode
+                            ? Colors.white70
+                            : Colors.grey[600],
+                      ),
                     ),
                   ],
                 ),
@@ -211,11 +269,15 @@ class HomePage extends StatelessWidget {
                     SvgPicture.asset(
                       isDarkMode ? "assets/images/dark/wind.svg" : "assets/images/light/wind.svg",
                       width: 40,
-                      color: Colors.grey[700],
+                        color: isDarkMode
+                            ? Colors.white70
+                            : Colors.grey[600],
                     ),
                     Text(
                       wind + "m/s",
-                      style: TextStyle(color: Colors.grey[600]),
+                      style: TextStyle(                              color: isDarkMode
+                          ? Colors.white70
+                          : Colors.grey[600],),
                     ),
                   ],
                 ),
@@ -295,7 +357,9 @@ class HomePage extends StatelessWidget {
                 FlSpot(10, 3),
                 FlSpot(11, 3),
               ],
-              colors: [Colors.grey[600]],
+              colors: isDarkMode
+      ? [Colors.white70]
+            : [Colors.grey[600]],
               isCurved: true,
               barWidth: 4,
               belowBarData: BelowBarData(

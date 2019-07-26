@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hava_negar/utility/farsi_names.dart';
+import 'package:hava_negar/utility/app_language.dart';
 
 class DrawerSection extends StatelessWidget {
   final Map day1, day2, day3, day4;
