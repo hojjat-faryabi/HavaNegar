@@ -52,9 +52,19 @@ flutter:
     - assets/images/light/cold_temp.png
     - assets/images/light/sun.svg
     - assets/images/light/sunrise.svg
-    - assets/images/light/sunset.svg
     - assets/images/light/wind.svg
+    - assets/images/light/sunset.svg
     - assets/images/light/rainy_icon.svg
+    - assets/images/light/cloudy_icon.svg
+    - assets/images/light/fog_icon.svg
+    - assets/images/light/frezzing_icon.svg
+    - assets/images/light/rain_snow_icon.svg
+    - assets/images/light/sun_cloud_icon.svg
+    - assets/images/light/sun_icon.svg
+    - assets/images/light/temp.svg
+    - assets/images/light/thunder_icon.svg
+    - assets/images/light/wind_icon.svg
+
 
     - assets/images/dark/big_sun.svg
     - assets/images/dark/mark_place.svg
@@ -65,6 +75,15 @@ flutter:
     - assets/images/dark/sunset.svg
     - assets/images/dark/wind.svg
     - assets/images/dark/rainy_icon.svg
+    - assets/images/dark/cloudy_icon.svg
+    - assets/images/dark/fog_icon.svg
+    - assets/images/dark/frezzing_icon.svg
+    - assets/images/dark/rain_snow_icon.svg
+    - assets/images/dark/sun_cloud_icon.svg
+    - assets/images/dark/sun_icon.svg
+    - assets/images/dark/temp.svg
+    - assets/images/dark/thunder_icon.svg
+    - assets/images/dark/wind_icon.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
