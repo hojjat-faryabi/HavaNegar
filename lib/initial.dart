@@ -6,6 +6,7 @@ import 'package:hava_negar/services/weather-service.dart';
 import 'package:hava_negar/utility/convert_timestanp.dart';
 import 'package:hava_negar/utility/app_language.dart';
 import 'package:hava_negar/utility/initial_data.dart';
+import 'package:hava_negar/utility/what_icon.dart';
 
 class Initial extends StatefulWidget {
   @override
@@ -53,7 +54,7 @@ class InitialState extends State<Initial> {
                 mainImage: "big_sun.svg",
               )
             : HomePage(
-                mainImage: "big_sun.svg",
+                mainImage: SelectIcon.icon[this.currentData["icon"]],
                 isDarkMode: this.isDarkMode,
                 temperature: (this.currentData["temperature"]).round().toString(),
                 scaffoldKey: scaffoldKey,
