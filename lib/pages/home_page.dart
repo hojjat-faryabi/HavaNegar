@@ -128,7 +128,9 @@ class HomePage extends StatelessWidget {
                     ),
                     Text(
                       highTemp + "\u2103",
-                      style: TextStyle(                              color: isDarkMode
+                      style: TextStyle(
+                        fontFamily: "Vazir_FD",
+                        color: isDarkMode
                           ? Colors.white70
                           : Colors.grey[600],),
                     ),
@@ -141,7 +143,9 @@ class HomePage extends StatelessWidget {
                     ),
                     Text(
                       lowTemp + "\u2103",
-                      style: TextStyle(                              color: isDarkMode
+                      style: TextStyle(
+                        fontFamily: "Vazir_FD",
+                        color: isDarkMode
                           ? Colors.white70
                           : Colors.grey[600],),
                     ),
@@ -160,25 +164,27 @@ class HomePage extends StatelessWidget {
                       child: Text(
                         "c",
                         style: TextStyle(
+                          inherit: false,
                           fontSize: 50,
                           color: isDarkMode
                               ? Colors.white70
                               : Colors.grey[600],
                         ),
                       ),
-                      top: 45,
+                      top: 65,
                     ),
                     Positioned(
                       child: Text(
                         "\u02DA",
                         style: TextStyle(
+                          inherit: false,
                           fontSize: 100,
                           color: isDarkMode
                               ? Colors.white70
                               : Colors.grey[600],
                         ),
                       ),
-                      top: 2,
+                      top: 25,
                       right: -4,
                     ),
                     Padding(
@@ -187,6 +193,7 @@ class HomePage extends StatelessWidget {
                         temperature,
                         maxLines: 1,
                         style: TextStyle(
+                          fontFamily: "Vazir_FD",
                           fontSize: 110,
                           fontWeight: FontWeight.bold,
                           color: isDarkMode
@@ -228,6 +235,7 @@ class HomePage extends StatelessWidget {
                     Text(
                       sunRise,
                       style: TextStyle(
+                        fontFamily: "Vazir_FD",
                         color: isDarkMode
                             ? Colors.white70
                             : Colors.grey[600],
@@ -252,6 +260,7 @@ class HomePage extends StatelessWidget {
                     Text(
                       sunSet,
                       style: TextStyle(
+                        fontFamily: "Vazir_FD",
                         color: isDarkMode
                             ? Colors.white70
                             : Colors.grey[600],
@@ -275,7 +284,9 @@ class HomePage extends StatelessWidget {
                     ),
                     Text(
                       wind + "m/s",
-                      style: TextStyle(                              color: isDarkMode
+                      style: TextStyle(
+                        fontFamily: "Vazir_FD",
+                        color: isDarkMode
                           ? Colors.white70
                           : Colors.grey[600],),
                     ),
@@ -307,6 +318,10 @@ class HomePage extends StatelessWidget {
           titlesData: FlTitlesData(
               show: true,
               bottomTitles: SideTitles(
+                textStyle: TextStyle(
+                  fontFamily: "Vazir_FD",
+                  color: Colors.black
+                ),
                   showTitles: true,
                   getTitles: (val) {
                     switch (val.toInt()) {
@@ -332,8 +347,6 @@ class HomePage extends StatelessWidget {
                         return '12';
                       case 10:
                         return '12';
-                      case 11:
-                        return '12';
                     }
                     return '';
                   }),
@@ -355,7 +368,6 @@ class HomePage extends StatelessWidget {
                 FlSpot(8, 4),
                 FlSpot(9, 5),
                 FlSpot(10, 3),
-                FlSpot(11, 3),
               ],
               colors: isDarkMode
       ? [Colors.white70]

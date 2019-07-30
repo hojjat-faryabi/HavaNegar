@@ -100,6 +100,9 @@ flutter:
     - family: Vazir
       fonts:
         - asset: assets/fonts/Vazir.ttf
+    - family: Vazir_FD
+      fonts:
+        - asset: assets/fonts/Vazir_FD.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
