@@ -1,6 +1,6 @@
 class ConvertTimestamp{
 
-  DateTime convert(int timestamp){
+  static DateTime convert(int timestamp){
     return DateTime.fromMillisecondsSinceEpoch(timestamp * 1000).toUtc();
   }
 }

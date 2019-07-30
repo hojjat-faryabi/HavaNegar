@@ -9,10 +9,10 @@ class WeatherService {
 
   Future<Map> getWeatherData(String lat, String lon) async{
 
-    var time = (DateTime.now().millisecondsSinceEpoch / 1000).round();
-    print(time);
+//    var time = (DateTime.now().millisecondsSinceEpoch / 1000).round();
+//    print(time);
 
-    String url = "https://api.darksky.net/forecast/$apiKey/$lat,$lon,$time?units=si";
+    String url = "https://api.darksky.net/forecast/$apiKey/$lat,$lon?units=si";
 
     try{
       var response = await http.get(url);
