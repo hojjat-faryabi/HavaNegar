@@ -31,54 +31,63 @@ class InitialState extends State<Initial> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    isDarkMode = InitialData.isDarkMode;
+    isDarkMode = HomePageInitialData.isDarkMode;
     _getWeatherData();
+  }
+
+  Future<void> _onRefresh() async{
+    await _getWeatherData();
+    return null;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         key: scaffoldKey,
-        body: weatherData == null
-            ? HomePage(
-                scaffoldKey: scaffoldKey,
-                isDarkMode: this.isDarkMode,
-                cityName: InitialData.cityName,
-                lowTemp: InitialData.lowTemp,
-                highTemp: InitialData.highTemp,
-                sunRise: InitialData.sunRise,
-                weatherStatus: InitialData.weatherStatus,
-                wind: InitialData.wind,
-                temperature: InitialData.temperature,
-                sunSet: InitialData.sunSet,
-                mainImage: "big_sun.svg",
-              )
-            : HomePage(
-                mainImage: SelectIcon.icon[this.currentData["icon"]],
-                isDarkMode: this.isDarkMode,
-                temperature: (this.currentData["temperature"]).round().toString(),
-                scaffoldKey: scaffoldKey,
-                wind: this.currentData["windSpeed"].toString(),
-                weatherStatus: FarsiNames.weatherStatus[this.currentData["icon"]],
-                highTemp: this.todayData["temperatureHigh"].round().toString(),
-                lowTemp: this.todayData["temperatureLow"].round().toString(),
-                cityName: this.city,
-                sunRise: (ConvertTimestamp.convert(this.todayData["sunriseTime"] + timezone.inSeconds).hour).toString() +
-                    ":" +
-                    (ConvertTimestamp.convert(this.todayData["sunriseTime"] + timezone.inSeconds).minute).toString(),
-                sunSet: ConvertTimestamp.convert(this.todayData["sunsetTime"] + timezone.inSeconds).hour.toString() +
-                    ":" +
-                    ConvertTimestamp.convert(this.todayData["sunsetTime"] + timezone.inSeconds).minute.toString(),
-              ),
+        body: RefreshIndicator(
+            child: weatherData == null
+                ? HomePage(
+              scaffoldKey: scaffoldKey,
+              isDarkMode: this.isDarkMode,
+              cityName: HomePageInitialData.cityName,
+              lowTemp: HomePageInitialData.lowTemp,
+              highTemp: HomePageInitialData.highTemp,
+              sunRise: HomePageInitialData.sunRise,
+              weatherStatus: HomePageInitialData.weatherStatus,
+              wind: HomePageInitialData.wind,
+              temperature: HomePageInitialData.temperature,
+              sunSet: HomePageInitialData.sunSet,
+              mainImage: "big_sun.svg",
+            )
+                : HomePage(
+              mainImage: SelectIcon.icon[this.currentData["icon"]],
+              isDarkMode: this.isDarkMode,
+              temperature: (this.currentData["temperature"]).round().toString(),
+              scaffoldKey: scaffoldKey,
+              wind: this.currentData["windSpeed"].toString(),
+              weatherStatus: FarsiNames.weatherStatus[this.currentData["icon"]],
+              highTemp: this.todayData["temperatureHigh"].round().toString(),
+              lowTemp: this.todayData["temperatureLow"].round().toString(),
+              cityName: this.city,
+              sunRise: (ConvertTimestamp.convert(this.todayData["sunriseTime"] + timezone.inSeconds).hour).toString() +
+                  ":" +
+                  (ConvertTimestamp.convert(this.todayData["sunriseTime"] + timezone.inSeconds).minute).toString(),
+              sunSet: ConvertTimestamp.convert(this.todayData["sunsetTime"] + timezone.inSeconds).hour.toString() +
+                  ":" +
+                  ConvertTimestamp.convert(this.todayData["sunsetTime"] + timezone.inSeconds).minute.toString(),
+            ),
+            onRefresh: _onRefresh
+        ),
         drawer: DrawerSection(
           isDarkMode: this.isDarkMode,
           onSwitchClicked: onDrawerSwitchClicked,
-          day1: InitialData.day1,
-          day2: InitialData.day2,
-          day3: InitialData.day3,
-          day4: InitialData.day4,
-          lastUpdate: "${InitialData.lastUpdate["clock"] + FarsiNames.halfDay[InitialData.lastUpdate["am_pm"]]}",
-        ));
+          day1: DrawerInitialData.day1,
+          day2: DrawerInitialData.day2,
+          day3: DrawerInitialData.day3,
+          day4: DrawerInitialData.day4,
+          lastUpdate: "${DrawerInitialData.lastUpdate["clock"] + FarsiNames.halfDay[DrawerInitialData.lastUpdate["am_pm"]]}",
+        )
+    );
   }
 
   _getWeatherData() async {

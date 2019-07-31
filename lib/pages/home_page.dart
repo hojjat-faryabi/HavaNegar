@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hava_negar/pages/select_city.dart';
 import 'package:hava_negar/services/location_service.dart';
 import 'package:hava_negar/services/weather-service.dart';
 
@@ -9,37 +10,39 @@ class HomePage extends StatelessWidget {
   String sunRise, sunSet, wind;
   var scaffoldKey;
 
+  BuildContext context;
+
   final String mainImage;
 
   var screenSize;
   bool isDarkMode;
 
-  HomePage(
-      {this.cityName,
-      this.highTemp,
-      this.lowTemp,
-      this.temperature,
-      this.weatherStatus,
-      this.sunRise,
-      this.sunSet,
-      this.wind,
-      @required this.scaffoldKey,
-      this.isDarkMode,
-        this.mainImage,
-      });
+  HomePage({
+    this.cityName,
+    this.highTemp,
+    this.lowTemp,
+    this.temperature,
+    this.weatherStatus,
+    this.sunRise,
+    this.sunSet,
+    this.wind,
+    @required this.scaffoldKey,
+    this.isDarkMode,
+    this.mainImage,
+  });
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     screenSize = MediaQuery.of(context).size;
+
+    this.context = context;
     //LocationService().getLocation();
     return ListView.builder(
         itemCount: 1,
         itemBuilder: (BuildContext context, int index) {
           return Container(
-            color: isDarkMode
-                ? Colors.grey[800]
-                : Colors.white70,
+            color: isDarkMode ? Colors.grey[800] : Colors.white70,
             child: _body(),
           );
         });
@@ -52,9 +55,7 @@ class HomePage extends StatelessWidget {
         Transform(
           child: Center(
             child: SvgPicture.asset(
-              isDarkMode
-                ?"assets/images/dark/$mainImage"
-                :"assets/images/light/$mainImage",
+              isDarkMode ? "assets/images/dark/$mainImage" : "assets/images/light/$mainImage",
               width: screenSize.width,
             ),
           ),
@@ -74,11 +75,9 @@ class HomePage extends StatelessWidget {
                         margin: const EdgeInsets.only(top: 5, left: 25),
                         child: GestureDetector(
                           child: Icon(
-                              Icons.dehaze,
-                              size: 30, 
-                              color: isDarkMode
-                                ? Colors.white70
-                                : Colors.grey[600],
+                            Icons.dehaze,
+                            size: 30,
+                            color: isDarkMode ? Colors.white70 : Colors.grey[600],
                           ),
                           onTap: () {
                             this.scaffoldKey.currentState.openDrawer();
@@ -88,22 +87,28 @@ class HomePage extends StatelessWidget {
                       margin: const EdgeInsets.only(top: 5, right: 50),
                       child: Row(
                         children: <Widget>[
-                          Text(
-                            cityName,
-                            style: TextStyle(
+                          GestureDetector(
+                            child: Text(
+                              cityName,
+                              style: TextStyle(
                                 fontSize: 30,
-                              color: isDarkMode
-                                  ? Colors.white70
-                                  : Colors.grey[600],
+                                color: isDarkMode ? Colors.white70 : Colors.grey[600],
+                              ),
                             ),
+                            onTap: () {
+                              Navigator.pushReplacement(
+                                this.context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        Directionality(textDirection: TextDirection.rtl, child: SelectCity())),
+                              );
+                            },
                           ),
                           Padding(
                             child: SvgPicture.asset(
-                                isDarkMode ? "assets/images/dark/mark_place.svg" : "assets/images/light/mark_place.svg",
-                                width: 20,
-                              color: isDarkMode
-                                  ? Colors.white70
-                                  : Colors.grey[600],
+                              isDarkMode ? "assets/images/dark/mark_place.svg" : "assets/images/light/mark_place.svg",
+                              width: 20,
+                              color: isDarkMode ? Colors.white70 : Colors.grey[600],
                             ),
                             padding: const EdgeInsets.only(left: 8, bottom: 4),
                           ),
@@ -120,34 +125,30 @@ class HomePage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    Image.asset(isDarkMode ? "assets/images/dark/hot_temp.png" : "assets/images/light/hot_temp.png",
-                        width: 20,
-                      color: isDarkMode
-                          ? Colors.white70
-                          : Colors.grey[600],
+                    Image.asset(
+                      isDarkMode ? "assets/images/dark/hot_temp.png" : "assets/images/light/hot_temp.png",
+                      width: 20,
+                      color: isDarkMode ? Colors.white70 : Colors.grey[600],
                     ),
                     Text(
                       highTemp + "\u2103",
                       style: TextStyle(
                         fontFamily: "Vazir_FD",
-                        color: isDarkMode
-                          ? Colors.white70
-                          : Colors.grey[600],),
+                        color: isDarkMode ? Colors.white70 : Colors.grey[600],
+                      ),
                     ),
                     Text(" / "),
-                    Image.asset(isDarkMode ? "assets/images/dark/cold_temp.png" : "assets/images/light/cold_temp.png",
-                        width: 20,
-                      color: isDarkMode
-                          ? Colors.white70
-                          : Colors.grey[600],
+                    Image.asset(
+                      isDarkMode ? "assets/images/dark/cold_temp.png" : "assets/images/light/cold_temp.png",
+                      width: 20,
+                      color: isDarkMode ? Colors.white70 : Colors.grey[600],
                     ),
                     Text(
                       lowTemp + "\u2103",
                       style: TextStyle(
                         fontFamily: "Vazir_FD",
-                        color: isDarkMode
-                          ? Colors.white70
-                          : Colors.grey[600],),
+                        color: isDarkMode ? Colors.white70 : Colors.grey[600],
+                      ),
                     ),
                   ],
                 ),
@@ -166,9 +167,7 @@ class HomePage extends StatelessWidget {
                         style: TextStyle(
                           inherit: false,
                           fontSize: 50,
-                          color: isDarkMode
-                              ? Colors.white70
-                              : Colors.grey[600],
+                          color: isDarkMode ? Colors.white70 : Colors.grey[600],
                         ),
                       ),
                       top: 65,
@@ -179,9 +178,7 @@ class HomePage extends StatelessWidget {
                         style: TextStyle(
                           inherit: false,
                           fontSize: 100,
-                          color: isDarkMode
-                              ? Colors.white70
-                              : Colors.grey[600],
+                          color: isDarkMode ? Colors.white70 : Colors.grey[600],
                         ),
                       ),
                       top: 25,
@@ -196,9 +193,7 @@ class HomePage extends StatelessWidget {
                           fontFamily: "Vazir_FD",
                           fontSize: 110,
                           fontWeight: FontWeight.bold,
-                          color: isDarkMode
-                              ? Colors.white70
-                              : Colors.grey[600],
+                          color: isDarkMode ? Colors.white70 : Colors.grey[600],
                           inherit: false,
                         ),
                       ),
@@ -212,10 +207,9 @@ class HomePage extends StatelessWidget {
                 margin: const EdgeInsets.only(right: 22),
                 child: Text(
                   weatherStatus,
-                  style: TextStyle(fontSize: 28,
-                    color: isDarkMode
-                        ? Colors.white70
-                        : Colors.grey[600],
+                  style: TextStyle(
+                    fontSize: 28,
+                    color: isDarkMode ? Colors.white70 : Colors.grey[600],
                   ),
                 ),
               ),
@@ -228,17 +222,13 @@ class HomePage extends StatelessWidget {
                     SvgPicture.asset(
                       isDarkMode ? "assets/images/dark/sunrise.svg" : "assets/images/light/sunrise.svg",
                       width: 40,
-                        color: isDarkMode
-                            ? Colors.white70
-                            : Colors.grey[700],
+                      color: isDarkMode ? Colors.white70 : Colors.grey[700],
                     ),
                     Text(
                       sunRise,
                       style: TextStyle(
                         fontFamily: "Vazir_FD",
-                        color: isDarkMode
-                            ? Colors.white70
-                            : Colors.grey[600],
+                        color: isDarkMode ? Colors.white70 : Colors.grey[600],
                       ),
                     ),
                   ],
@@ -253,17 +243,13 @@ class HomePage extends StatelessWidget {
                     SvgPicture.asset(
                       isDarkMode ? "assets/images/dark/sunset.svg" : "assets/images/light/sunset.svg",
                       width: 40,
-                        color: isDarkMode
-                            ? Colors.white70
-                            : Colors.grey[600],
+                      color: isDarkMode ? Colors.white70 : Colors.grey[600],
                     ),
                     Text(
                       sunSet,
                       style: TextStyle(
                         fontFamily: "Vazir_FD",
-                        color: isDarkMode
-                            ? Colors.white70
-                            : Colors.grey[600],
+                        color: isDarkMode ? Colors.white70 : Colors.grey[600],
                       ),
                     ),
                   ],
@@ -278,17 +264,14 @@ class HomePage extends StatelessWidget {
                     SvgPicture.asset(
                       isDarkMode ? "assets/images/dark/wind.svg" : "assets/images/light/wind.svg",
                       width: 40,
-                        color: isDarkMode
-                            ? Colors.white70
-                            : Colors.grey[600],
+                      color: isDarkMode ? Colors.white70 : Colors.grey[600],
                     ),
                     Text(
                       wind + "m/s",
                       style: TextStyle(
                         fontFamily: "Vazir_FD",
-                        color: isDarkMode
-                          ? Colors.white70
-                          : Colors.grey[600],),
+                        color: isDarkMode ? Colors.white70 : Colors.grey[600],
+                      ),
                     ),
                   ],
                 ),
@@ -318,10 +301,7 @@ class HomePage extends StatelessWidget {
           titlesData: FlTitlesData(
               show: true,
               bottomTitles: SideTitles(
-                textStyle: TextStyle(
-                  fontFamily: "Vazir_FD",
-                  color: Colors.black
-                ),
+                  textStyle: TextStyle(fontFamily: "Vazir_FD", color: Colors.black),
                   showTitles: true,
                   getTitles: (val) {
                     switch (val.toInt()) {
@@ -369,9 +349,7 @@ class HomePage extends StatelessWidget {
                 FlSpot(9, 5),
                 FlSpot(10, 3),
               ],
-              colors: isDarkMode
-      ? [Colors.white70]
-            : [Colors.grey[600]],
+              colors: isDarkMode ? [Colors.white70] : [Colors.grey[600]],
               isCurved: true,
               barWidth: 4,
               belowBarData: BelowBarData(

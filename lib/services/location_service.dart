@@ -4,13 +4,13 @@ import 'package:location/location.dart';
 class LocationService {
   var location = new Location();
 
-  var currentLocation ;
+  LocationData currentLocation ;
 
   getLocation() async{
       print(await this.location.hasPermission());
       try {
-        print(await this.location.getLocation());
-        print("try");
+        this.currentLocation = await this.location.getLocation();
+        print(this.currentLocation.latitude);
       } catch (e) {
         print(e.toString());
         if (e.code == 'PERMISSION_DENIED') {

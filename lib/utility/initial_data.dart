@@ -1,12 +1,8 @@
 /// this data fetch from data base in splash screen
 
-class InitialData {
+class HomePageInitialData {
   /// initial data section
   static bool isDarkMode = false;
-  static Map lastUpdate = {
-    "clock" : "8:20",
-    "am_pm" : "pm"
-  };
 
   /// homePage data section
   static String cityName = "Jiroft";
@@ -18,7 +14,9 @@ class InitialData {
   static String wind = "20";
   static String weatherStatus = "suny";
 
+}
 
+class DrawerInitialData{
   /// drawer data section
   static Map day1 = {
     "icon" : "rainy_icon.svg",
@@ -28,10 +26,10 @@ class InitialData {
   };
 
   static Map day2 = {
-  "icon" : "rainy_icon.svg",
-  "week_number" : 1,
-  "high_temp" : 35,
-  "low_temp" : 15,
+    "icon" : "rainy_icon.svg",
+    "week_number" : 1,
+    "high_temp" : 35,
+    "low_temp" : 15,
   };
 
   static Map day3 = {
@@ -46,5 +44,10 @@ class InitialData {
     "week_number" : 3,
     "high_temp" : 35,
     "low_temp" : 15,
+  };
+
+  static Map lastUpdate = {
+    "clock" : "8:20",
+    "am_pm" : "pm"
   };
 }
