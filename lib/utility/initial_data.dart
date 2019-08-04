@@ -3,6 +3,8 @@
 class HomePageInitialData {
   /// initial data section
   static bool isDarkMode = false;
+  static String latt = "30.2924";
+  static String longt = "57.0646";
 
   /// homePage data section
   static String cityName = "Jiroft";

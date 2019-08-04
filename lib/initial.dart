@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hava_negar/pages/drawer_section.dart';
 import 'package:hava_negar/pages/home_page.dart';
-import 'package:hava_negar/services/get_city_name.dart';
+import 'package:hava_negar/services/city_service.dart';
+import 'package:hava_negar/services/location_service.dart';
 import 'package:hava_negar/services/weather-service.dart';
 import 'package:hava_negar/utility/convert_timestanp.dart';
 import 'package:hava_negar/utility/app_language.dart';
@@ -42,6 +43,9 @@ class InitialState extends State<Initial> {
 
   @override
   Widget build(BuildContext context) {
+
+    
+
     return Scaffold(
         key: scaffoldKey,
         body: RefreshIndicator(
@@ -92,9 +96,14 @@ class InitialState extends State<Initial> {
 
   _getWeatherData() async {
 //    print(this.weatherData);,
-    print(DateTime.now().timeZoneOffset.inMinutes);
-    this.weatherData = await WeatherService().getWeatherData("30.2924", "57.0646");
-    this.city = await CityName().getCityName(weatherData["latitude"], weatherData["longitude"]);
+    //await LocationService.getLocation();
+//    await CityService.getCityLocation(location: "جیرف");
+
+    //print(DateTime.now().timeZoneOffset.inMinutes);
+    this.weatherData = await WeatherService().getWeatherData(HomePageInitialData.latt, HomePageInitialData.longt);
+    this.city = await CityService.getCityName(weatherData["latitude"], weatherData["longitude"]);
+    //print(weatherData);
+    //print(city);
 
     if (this.weatherData == null) {
       print("Error in Weather!!");
@@ -111,14 +120,14 @@ class InitialState extends State<Initial> {
 
         int c = 1;
         this.hourDara.forEach((value){
-          print("$c -> value: ${ConvertTimestamp.convert(value["time"])}");
+          //print("$c -> value: ${ConvertTimestamp.convert(value["time"])}");
           c++;
         });
 
-        var time = (DateTime.now().millisecondsSinceEpoch / 1000).round();
+        //var time = (DateTime.now().millisecondsSinceEpoch / 1000).round();
 
 
-        print(this.weatherData);
+       // print(this.weatherData);
       });
     }
 
