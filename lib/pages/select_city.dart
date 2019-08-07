@@ -215,13 +215,16 @@ class SelectCityState extends State<SelectCity> {
               "شهر : " +
                   city +
                   "\n طول جغرافیایی : " +
-                  locationData["longt"] +
+                  locationData["results"][0]["geometry"]["lng"].toString() +
                   " \n عرض جغرافیایی : " +
-                  locationData["latt"],
+                  locationData["results"][0]["geometry"]["lat"].toString(),
               style: TextStyle(fontFamily: "Vazir"),
             )));
-        HomePageInitialData.latt = locationData["latt"].toString();
-        HomePageInitialData.longt = locationData["longt"].toString();
+        HomePageInitialData.latt = locationData["results"][0]["geometry"]["lat"].toString();
+        HomePageInitialData.longt = locationData["results"][0]["geometry"]["lng"].toString();
+        HomePageInitialData.cityName = locationData["results"][0]["components"]["city"].toString();
+
+        // and this section we most clear all old data in initial_data.dart
 
         Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => Initial()) ,

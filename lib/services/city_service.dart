@@ -8,16 +8,19 @@ class CityService {
 
   static Future<String> getCityName(double lat, double lon) async{
 
-    String url = "https://geocode.xyz/$lat,$lon?geoit=json&auth=$apiKey";
+
+//    String url = "https://geocode.xyz/$lat,$lon?geoit=json&auth=$apiKey";
+    String url = "https://api.opencagedata.com/geocode/v1/json?q=${lat.toString()}+${lon.toString()}&key=$apiKey&language=fa";
     //print("$lat, $lon");
 
     try{
       var response = await http.get(url);
-      //print(response.body);
+//      print(response.body);
       if(response.statusCode == 200){
         var jsonResponse = await convert.jsonDecode(response.body);
+//        print(jsonResponse);
         // most correct it !! in other city !!
-        return jsonResponse["osmtags"]["name"];
+        return jsonResponse["results"][0]["components"]["city"];
       }else{
         print("Request failed with status: ${response.statusCode}.");
         return null;
@@ -33,7 +36,8 @@ class CityService {
 
   static Future<Map> getCityLocation({String location,}) async{
 
-    String url = "https://geocode.xyz/?locate=$location&auth=$apiKey&json=1";
+//    String url = "https://geocode.xyz/?locate=$location&auth=$apiKey&json=1";
+    String url = "https://api.opencagedata.com/geocode/v1/json?q=$location&key=$apiKey&language=fa";
 //    print("$lat, $lon");
 
     try{
@@ -41,10 +45,9 @@ class CityService {
 //      print(response.body);
       if(response.statusCode == 200){
         var jsonResponse = await convert.jsonDecode(response.body);
-        //"longt"
-        //print(jsonResponse["error"]);
-        if(jsonResponse["error"] != null){
-          print("//////////////////error : " + jsonResponse["error"]);
+//        print(jsonResponse);
+        if(jsonResponse["results"].toString() == "[]"){
+          print("//////////////////error : ");
           return null;
         }else{
           return jsonResponse;
