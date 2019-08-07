@@ -7,6 +7,7 @@ class HomePageInitialData {
   static String longt = "57.0646";
 
   /// homePage data section
+  static String mainImage = "big_sun.svg";
   static String cityName = "Jiroft";
   static String highTemp = "40";
   static String lowTemp = "30";
@@ -48,8 +49,5 @@ class DrawerInitialData{
     "low_temp" : 15,
   };
 
-  static Map lastUpdate = {
-    "clock" : "8:20",
-    "am_pm" : "pm"
-  };
+  static String lastUpdate = "8:20";
 }
