@@ -42,7 +42,6 @@ class HomePage extends StatelessWidget {
         itemCount: 1,
         itemBuilder: (BuildContext context, int index) {
           return Container(
-            color: isDarkMode ? Colors.grey[800] : Colors.white70,
             child: _body(),
           );
         });
