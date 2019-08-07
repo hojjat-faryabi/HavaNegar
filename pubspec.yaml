@@ -85,6 +85,8 @@ flutter:
     - assets/images/dark/thunder_icon.svg
     - assets/images/dark/wind_icon.svg
 
+    - assets/images/splash_image.svg
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
