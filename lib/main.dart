@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hava_negar/pages/home_page.dart';
+import 'package:hava_negar/pages/splash_screen.dart';
 
 import 'initial.dart';
 
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.yellow,
         fontFamily: "Vazir"
       ),
-      home: Initial(),
+      home: SplashScreen(),
     );
   }
 }

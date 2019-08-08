@@ -7,6 +7,7 @@ import 'package:hava_negar/utility/convert_timestanp.dart';
 import 'package:hava_negar/utility/app_language.dart';
 import 'package:hava_negar/utility/initial_data.dart';
 import 'package:hava_negar/utility/what_icon.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Initial extends StatefulWidget {
   @override
@@ -14,7 +15,7 @@ class Initial extends StatefulWidget {
 }
 
 class InitialState extends State<Initial> {
-  bool isDarkMode;
+  bool isDarkMode = HomePageInitialData.isDarkMode;
 
   Map weatherData;
   Map currentData;
@@ -72,15 +73,8 @@ class InitialState extends State<Initial> {
   }
 
   _getWeatherData() async {
-//    print(this.weatherData);,
-    //await LocationService.getLocation();
-//    await CityService.getCityLocation(location: "جیرف");
-
-    //print(DateTime.now().timeZoneOffset.inMinutes);
     this.weatherData = await WeatherService().getWeatherData(HomePageInitialData.latt, HomePageInitialData.longt);
     this.city = await CityService.getCityName(weatherData["latitude"], weatherData["longitude"]);
-    //print(weatherData);
-    //print(city);
 
     if (this.weatherData == null) {
       print("Error in Weather!!");
@@ -138,30 +132,73 @@ class InitialState extends State<Initial> {
             ":" +
             ConvertTimestamp.convert(this.todayData["sunsetTime"] + timezone.inSeconds).minute.toString();
         HomePageInitialData.mainImage = SelectIcon.icon[this.currentData["icon"]];
-
-        // int c = 1;
-        // this.hourDara.forEach((value){
-        //print("$c -> value: ${ConvertTimestamp.convert(value["time"])}");
-        //   c++;
-        // });
-
-        //var time = (DateTime.now().millisecondsSinceEpoch / 1000).round();
-
-        // print(this.weatherData);
       });
+      /** save current state to shared pref */
+      await _saveData();
     }
+  }
 
-    //int times = this.weatherData["currently"]["time"];
-    // print(DateTime.fromMillisecondsSinceEpoch(times * 1000).toUtc());
-//    print(this.weatherData);
+  Future _saveData({bool onlyDarkMode = false}) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    if (onlyDarkMode) {
+      await prefs.setBool("isDarkMode", HomePageInitialData.isDarkMode);
+    } else {
+      // set HomePageInitialData
+      await prefs.setBool("isDarkMode", isDarkMode);
+      await prefs.setString("latt", HomePageInitialData.latt);
+      await prefs.setString("mainImage", HomePageInitialData.mainImage);
+      await prefs.setString("sunSet", HomePageInitialData.sunSet);
+      await prefs.setString("weatherStatus", HomePageInitialData.weatherStatus);
+      await prefs.setString("wind", HomePageInitialData.wind);
+      await prefs.setString("temperature", HomePageInitialData.temperature);
+      await prefs.setString("highTemp", HomePageInitialData.highTemp);
+      await prefs.setString("lowTemp", HomePageInitialData.lowTemp);
+      await prefs.setString("cityName", HomePageInitialData.cityName);
+      await prefs.setString("longt", HomePageInitialData.longt);
+      await prefs.setString("sunRise", HomePageInitialData.sunRise);
+
+      // set DrawerInitialData
+      await prefs.setString("lastUpdate", DrawerInitialData.lastUpdate);
+
+      await prefs.setStringList("day1", <String>[
+        DrawerInitialData.day1["icon"],
+        DrawerInitialData.day1["week_number"].toString(),
+        DrawerInitialData.day1["high_temp"].toString(),
+        DrawerInitialData.day1["low_temp"].toString(),
+      ]);
+      await prefs.setStringList("day2", <String>[
+        DrawerInitialData.day2["icon"],
+        DrawerInitialData.day2["week_number"].toString(),
+        DrawerInitialData.day2["high_temp"].toString(),
+        DrawerInitialData.day2["low_temp"].toString(),
+      ]);
+      await prefs.setStringList("day3", <String>[
+        DrawerInitialData.day3["icon"],
+        DrawerInitialData.day3["week_number"].toString(),
+        DrawerInitialData.day3["high_temp"].toString(),
+        DrawerInitialData.day3["low_temp"].toString(),
+      ]);
+      await prefs.setStringList("day4", <String>[
+        DrawerInitialData.day4["icon"],
+        DrawerInitialData.day4["week_number"].toString(),
+        DrawerInitialData.day4["high_temp"].toString(),
+        DrawerInitialData.day4["low_temp"].toString(),
+      ]);
+    }
   }
 
   onDrawerSwitchClicked(bool value) {
     setState(() {
-      if (this.isDarkMode)
+      if (this.isDarkMode) {
         this.isDarkMode = false;
-      else
+        HomePageInitialData.isDarkMode = false;
+      } else {
         this.isDarkMode = true;
+        HomePageInitialData.isDarkMode = true;
+      }
     });
+
+    _saveData(onlyDarkMode: true);
   }
 }
