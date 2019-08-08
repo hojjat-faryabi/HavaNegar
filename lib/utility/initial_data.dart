@@ -23,28 +23,28 @@ class DrawerInitialData{
   /// drawer data section
   static Map day1 = {
     "icon" : "rainy_icon.svg",
-    "week_number" : 0,
+    "week_number" : 1,
     "high_temp" : 00,
     "low_temp" : 00,
   };
 
   static Map day2 = {
     "icon" : "rainy_icon.svg",
-    "week_number" : 0,
+    "week_number" : 1,
     "high_temp" : 00,
     "low_temp" : 00,
   };
 
   static Map day3 = {
     "icon" : "rainy_icon.svg",
-    "week_number" : 0,
+    "week_number" : 1,
     "high_temp" : 00,
     "low_temp" : 00,
   };
 
   static Map day4 = {
     "icon" : "rainy_icon.svg",
-    "week_number" : 0,
+    "week_number" : 1,
     "high_temp" : 00,
     "low_temp" : 00,
   };

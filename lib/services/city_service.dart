@@ -8,17 +8,17 @@ class CityService {
 
   static Future<String> getCityName(double lat, double lon) async{
 
-
+    //print("$lat, $lon");
 //    String url = "https://geocode.xyz/$lat,$lon?geoit=json&auth=$apiKey";
     String url = "https://api.opencagedata.com/geocode/v1/json?q=${lat.toString()}+${lon.toString()}&key=$apiKey&language=fa";
-    //print("$lat, $lon");
+
 
     try{
       var response = await http.get(url);
-//      print(response.body);
+     // print(response.body);
       if(response.statusCode == 200){
         var jsonResponse = await convert.jsonDecode(response.body);
-//        print(jsonResponse);
+        print(jsonResponse);
         // most correct it !! in other city !!
         return jsonResponse["results"][0]["components"]["city"];
       }else{
