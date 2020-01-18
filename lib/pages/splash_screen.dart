@@ -20,7 +20,6 @@ class SplashScreenState extends State<SplashScreen> with SingleTickerProviderSta
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     animController = new AnimationController(vsync: this, duration: Duration(seconds: 3));
     anim = Tween(begin: 0.0, end: 3.14).animate(CurvedAnimation(
@@ -42,9 +41,7 @@ class SplashScreenState extends State<SplashScreen> with SingleTickerProviderSta
     _init();
 
     var screenSize = MediaQuery.of(context).size;
-    animController.forward();
 
-    // TODO: implement build
     return Scaffold(
       key: scaffoldKey,
       body: Container(
@@ -79,6 +76,10 @@ class SplashScreenState extends State<SplashScreen> with SingleTickerProviderSta
 
     if (prefs.getKeys().isEmpty) {
       if (await CheckInternetConnection.check()) {
+
+        await animController.forward();
+//        await Future.delayed(Duration(seconds: 3));
+//        animController.dispose();
         // goto select city page
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => Directionality(textDirection: TextDirection.rtl, child: SelectCity())));
@@ -145,7 +146,9 @@ class SplashScreenState extends State<SplashScreen> with SingleTickerProviderSta
         "low_temp": int.parse(prefs.getStringList("day4")[1]),
       };
 
-      await Future.delayed(Duration(seconds: 1));
+      animController.forward();
+
+      await Future.delayed(Duration(seconds: 3));
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Initial()));
     }
   }
