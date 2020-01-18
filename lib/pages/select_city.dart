@@ -189,7 +189,6 @@ class SelectCityState extends State<SelectCity> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 
@@ -200,36 +199,42 @@ class SelectCityState extends State<SelectCity> {
     //Future.delayed(Duration(seconds: 3));
 //    print(await CityService.getCityLocation(location: city));
 
-    setState(() {
-      Navigator.of(context).pop();
-      if (locationData == null) {
-        print("wrong!!");
-        this.scaffoldKey.currentState.showSnackBar(SnackBar(
-                content: Text(
-              "شهر وارد شده یافت نشد!",
-              style: TextStyle(fontFamily: "Vazir"),
-            )));
-      } else {
-        this.scaffoldKey.currentState.showSnackBar(SnackBar(
-                content: Text(
-              "شهر : " +
-                  city +
-                  "\n طول جغرافیایی : " +
-                  locationData["results"][0]["geometry"]["lng"].toString() +
-                  " \n عرض جغرافیایی : " +
-                  locationData["results"][0]["geometry"]["lat"].toString(),
-              style: TextStyle(fontFamily: "Vazir"),
-            )));
-        HomePageInitialData.latt = locationData["results"][0]["geometry"]["lat"].toString();
-        HomePageInitialData.longt = locationData["results"][0]["geometry"]["lng"].toString();
-        HomePageInitialData.cityName = locationData["results"][0]["components"]["city"].toString();
+    Navigator.of(context).pop();
+    if (locationData == null) {
+      print("wrong!!");
+      this.scaffoldKey.currentState.showSnackBar(SnackBar(
+          content: Text(
+            "شهر وارد شده یافت نشد!",
+            style: TextStyle(fontFamily: "Vazir"),
+          )));
+    } else {
+      this.scaffoldKey.currentState.showSnackBar(SnackBar(
+          content: Text(
+            "شهر : " +
+                city +
+                "\n طول جغرافیایی : " +
+                locationData["results"][0]["geometry"]["lng"].toString() +
+                " \n عرض جغرافیایی : " +
+                locationData["results"][0]["geometry"]["lat"].toString(),
+            style: TextStyle(fontFamily: "Vazir"),
+          ),
+          duration: Duration(seconds: 3),
+      )
+      );
+      HomePageInitialData.latt = locationData["results"][0]["geometry"]["lat"].toString();
+      HomePageInitialData.longt = locationData["results"][0]["geometry"]["lng"].toString();
+      HomePageInitialData.cityName = city;
 
-        // and this section we most clear all old data in initial_data.dart
+      // and this section we most clear all old data in initial_data.dart
 
-        Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => Initial()) ,
-        );
-      }
-    });
+      await Future.delayed(Duration(seconds: 3));
+
+      Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) => Initial()) ,
+      );
+    }
+
+//    setState(() {
+//    });
   }
 }
