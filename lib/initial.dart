@@ -86,7 +86,7 @@ class InitialState extends State<Initial> {
   }
 
   _getWeatherData() async {
-    this.weatherData = await WeatherService().getWeatherData(HomePageInitialData.latt, HomePageInitialData.longt);
+    this.weatherData = await WeatherService.getWeatherData(HomePageInitialData.latt, HomePageInitialData.longt);
     //this.city = await CityService.getCityName(weatherData["latitude"], weatherData["longitude"]);
 
     if (this.weatherData == null) {

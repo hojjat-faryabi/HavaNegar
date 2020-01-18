@@ -19,8 +19,19 @@ class CityService {
       if(response.statusCode == 200){
         var jsonResponse = await convert.jsonDecode(response.body);
         print(jsonResponse);
-        // most correct it !! in other city !!
-        return jsonResponse["results"][0]["components"]["city"];
+//        return jsonResponse["results"][0]["components"]["city"];
+
+        if(jsonResponse["results"][0]["components"].containsKey("city")){
+          return jsonResponse["results"][0]["components"]["city"];
+        }else if(jsonResponse["results"][0]["components"].containsKey("village")){
+          return jsonResponse["results"][0]["components"]["village"];
+        }else if(jsonResponse["results"][0]["components"].containsKey("state_district")){
+          return jsonResponse["results"][0]["components"]["state_district"];
+        }else{
+          return jsonResponse["results"][0]["components"]["country"];
+        }
+
+
       }else{
         print("Request failed with status: ${response.statusCode}.");
         return null;

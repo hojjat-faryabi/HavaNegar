@@ -5,14 +5,12 @@ import 'api_key.dart';
 
 class WeatherService {
 
-  String apiKey = ApiKey.weatherKey;
-
-  Future<Map> getWeatherData(String lat, String lon) async{
+  static Future<Map> getWeatherData(String lat, String lon) async{
 
 //    var time = (DateTime.now().millisecondsSinceEpoch / 1000).round();
 //    print(time);
 
-    String url = "https://api.darksky.net/forecast/$apiKey/$lat,$lon?units=si";
+    String url = "https://api.darksky.net/forecast/${ApiKey.weatherKey}/$lat,$lon?units=si";
 
     try{
       var response = await http.get(url);

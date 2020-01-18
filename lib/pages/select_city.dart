@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hava_negar/services/city_service.dart';
+import 'package:hava_negar/services/location_service.dart';
 import 'package:hava_negar/utility/initial_data.dart';
 
 import '../initial.dart';
@@ -85,8 +86,7 @@ class SelectCityState extends State<SelectCity> {
                               hintText: "نام شهر",
                               border: OutlineInputBorder(
                                 gapPadding: 0,
-                                borderSide:
-                                    BorderSide(color: Colors.yellow[600]),
+                                borderSide: BorderSide(color: Colors.yellow[600]),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               suffixIcon: GestureDetector(
@@ -96,9 +96,7 @@ class SelectCityState extends State<SelectCity> {
                                     color: Colors.black,
                                   ),
                                   decoration: BoxDecoration(
-                                      color: _groupValue == 0
-                                          ? Colors.yellow[600]
-                                          : Colors.grey,
+                                      color: _groupValue == 0 ? Colors.yellow[600] : Colors.grey,
                                       borderRadius: BorderRadius.only(
                                           bottomRight: Radius.circular(0),
                                           bottomLeft: Radius.circular(10),
@@ -106,38 +104,33 @@ class SelectCityState extends State<SelectCity> {
                                           topRight: Radius.circular(0))),
                                 ),
                                 onTap: () {
-                                  if (this.controller.text != "" &&
-                                      this.controller.text != null) {
-                                    _getCityLocation(
-                                        this.controller.text, context);
+                                  if (this.controller.text != "" && this.controller.text != null) {
+                                    _getCityLocation(this.controller.text, context);
                                     showDialog(
                                       context: context,
                                       builder: (_) {
                                         return AlertDialog(
-                                          content: Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: <Widget>[
-                                              CircularProgressIndicator(
-                                                strokeWidth: 5,
-                                              ),
-                                            ],
-                                          )
-                                        );
+                                            content: Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[
+                                            CircularProgressIndicator(
+                                              strokeWidth: 5,
+                                            ),
+                                          ],
+                                        ));
                                       },
                                       barrierDismissible: false,
                                     );
-                                    FocusScope.of(context)
-                                        .requestFocus(new FocusNode());
+                                    FocusScope.of(context).requestFocus(new FocusNode());
                                     //print(this.controller.text);
                                   } else {
                                     print("empety input!!");
                                   }
                                 },
                               ),
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 0, vertical: 5)),
+                              contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 5)),
                         ),
                       )
                     ],
@@ -162,17 +155,16 @@ class SelectCityState extends State<SelectCity> {
                           margin: const EdgeInsets.symmetric(horizontal: 50),
                           height: 35,
                           decoration: BoxDecoration(
-                              color: _groupValue == 1
-                                  ? Colors.yellow[500]
-                                  : Colors.grey,
+                              color: _groupValue == 1 ? Colors.yellow[500] : Colors.grey,
                               borderRadius: BorderRadius.circular(10)),
                           child: Center(
                             child: Icon(Icons.my_location),
                           ),
                         ),
                         onTap: _groupValue == 1
-                            ? () {
+                            ? () async {
                                 print("gps");
+                                await _getGpsLocation();
                               }
                             : null,
                       )
@@ -192,6 +184,76 @@ class SelectCityState extends State<SelectCity> {
     super.dispose();
   }
 
+  Future _getGpsLocation() async {
+    if (await LocationService.hasPermission()) {
+      showDialog(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+              content: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              CircularProgressIndicator(
+                strokeWidth: 5,
+              ),
+            ],
+          ));
+        },
+      );
+
+      Map gpsData = await LocationService.getLocation();
+
+//      Navigator.of(context).pop();
+
+      if (gpsData != null) {
+        String locationName = await CityService.getCityName(gpsData["lat"], gpsData["lon"]);
+
+        Navigator.of(context).pop();
+        if (locationName == null) {
+          print("wrong!!");
+          this.scaffoldKey.currentState.showSnackBar(SnackBar(
+                  content: Text(
+                "شهر یافت نشد!",
+                style: TextStyle(fontFamily: "Vazir"),
+              )));
+        } else {
+          this.scaffoldKey.currentState.showSnackBar(SnackBar(
+                content: Text(
+                  "شهر : " + locationName,
+                  style: TextStyle(fontFamily: "Vazir"),
+                ),
+                duration: Duration(seconds: 3),
+              ));
+
+          HomePageInitialData.latt = gpsData["lat"].toString();
+          HomePageInitialData.longt = gpsData["lon"].toString();
+          HomePageInitialData.cityName = locationName;
+
+          // and this section we most clear all old data in initial_data.dart
+
+          await Future.delayed(Duration(seconds: 3));
+
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => Initial()),
+          );
+        }
+      } else {
+        // show a snack bar and tell cant get your location at this time !!
+        print("wrong!!");
+        this.scaffoldKey.currentState.showSnackBar(SnackBar(
+                content: Text(
+              "موقعیت مکانی شما یافت نشد !!",
+              style: TextStyle(fontFamily: "Vazir"),
+            )));
+      }
+    } else {
+      await LocationService.getPermission();
+    }
+  }
+
   _getCityLocation(String city, BuildContext context) async {
     var locationData;
     locationData = await CityService.getCityLocation(location: city);
@@ -203,24 +265,23 @@ class SelectCityState extends State<SelectCity> {
     if (locationData == null) {
       print("wrong!!");
       this.scaffoldKey.currentState.showSnackBar(SnackBar(
-          content: Text(
+              content: Text(
             "شهر وارد شده یافت نشد!",
             style: TextStyle(fontFamily: "Vazir"),
           )));
     } else {
       this.scaffoldKey.currentState.showSnackBar(SnackBar(
-          content: Text(
-            "شهر : " +
-                city +
-                "\n طول جغرافیایی : " +
-                locationData["results"][0]["geometry"]["lng"].toString() +
-                " \n عرض جغرافیایی : " +
-                locationData["results"][0]["geometry"]["lat"].toString(),
-            style: TextStyle(fontFamily: "Vazir"),
-          ),
-          duration: Duration(seconds: 3),
-      )
-      );
+            content: Text(
+              "شهر : " +
+                  city +
+                  "\n طول جغرافیایی : " +
+                  locationData["results"][0]["geometry"]["lng"].toString() +
+                  " \n عرض جغرافیایی : " +
+                  locationData["results"][0]["geometry"]["lat"].toString(),
+              style: TextStyle(fontFamily: "Vazir"),
+            ),
+            duration: Duration(seconds: 3),
+          ));
       HomePageInitialData.latt = locationData["results"][0]["geometry"]["lat"].toString();
       HomePageInitialData.longt = locationData["results"][0]["geometry"]["lng"].toString();
       HomePageInitialData.cityName = city;
@@ -229,8 +290,9 @@ class SelectCityState extends State<SelectCity> {
 
       await Future.delayed(Duration(seconds: 3));
 
-      Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) => Initial()) ,
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Initial()),
       );
     }
 

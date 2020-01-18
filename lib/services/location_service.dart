@@ -10,8 +10,8 @@ class LocationService {
       currentLocation = await location.getLocation();
       print("----------------------" + currentLocation.latitude.toString());
       return {
-        "lat" : "",
-        "lon" : "",
+        "lat" : currentLocation.latitude,
+        "lon" : currentLocation.longitude,
       };
     } catch (e) {
       print(e.toString());
