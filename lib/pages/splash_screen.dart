@@ -146,9 +146,7 @@ class SplashScreenState extends State<SplashScreen> with SingleTickerProviderSta
         "low_temp": int.parse(prefs.getStringList("day4")[1]),
       };
 
-      animController.forward();
-
-      await Future.delayed(Duration(seconds: 3));
+      await animController.forward();
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Initial()));
     }
   }
