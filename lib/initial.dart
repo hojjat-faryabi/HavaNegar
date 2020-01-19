@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:hava_negar/pages/drawer_section.dart';
 import 'package:hava_negar/pages/home_page.dart';
@@ -20,7 +21,7 @@ class InitialState extends State<Initial> {
 
   Map weatherData;
   Map currentData;
-  List hourDara;
+  List hourData;
   Map todayData;
   List weekData;
   String city;
@@ -31,7 +32,6 @@ class InitialState extends State<Initial> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     this.city = HomePageInitialData.cityName;
     isDarkMode = HomePageInitialData.isDarkMode;
@@ -95,7 +95,7 @@ class InitialState extends State<Initial> {
     } else {
       setState(() {
         this.currentData = this.weatherData["currently"];
-        this.hourDara = this.weatherData["hourly"]["data"];
+        this.hourData = this.weatherData["hourly"]["data"];
         this.todayData = this.weatherData["daily"]["data"][1];
         this.weekData = this.weatherData["daily"]["data"];
 
@@ -144,6 +144,34 @@ class InitialState extends State<Initial> {
             ConvertTimestamp.convert(this.todayData["sunsetTime"] + timezone.inSeconds).minute.toString();
         HomePageInitialData.mainImage = SelectIcon.icon[this.currentData["icon"]];
       });
+
+
+      int currentDate = currentData["time"];
+//      print(currentDate);
+//      print(
+//          DateTime.fromMillisecondsSinceEpoch(currentDate * 1000).toUtc().toLocal().hour
+//      );
+
+
+      int counter = 0;
+      HomePageInitialData.hoursTemp.clear();
+      HomePageInitialData.hours.clear();
+      for(var item in this.hourData){
+        if(counter == 12){
+          break;
+        }
+        if(item["time"] > currentDate){
+          counter++;
+          HomePageInitialData.hours.add(
+              DateTime.fromMillisecondsSinceEpoch(item["time"] * 1000).toUtc().toLocal().hour.toString()
+          );
+          HomePageInitialData.hoursTemp.add(
+              item["temperature"].toString()
+          );
+        }
+      }
+      counter = 0;
+
       /** save current state to shared pref */
       await _saveData();
     }
@@ -168,6 +196,9 @@ class InitialState extends State<Initial> {
       await prefs.setString("cityName", HomePageInitialData.cityName);
       await prefs.setString("longt", HomePageInitialData.longt);
       await prefs.setString("sunRise", HomePageInitialData.sunRise);
+
+      await prefs.setStringList("hours", HomePageInitialData.hours);
+      await prefs.setStringList("hoursTemp", HomePageInitialData.hoursTemp);
 
       // set DrawerInitialData
       await prefs.setString("lastUpdate", DrawerInitialData.lastUpdate);

@@ -115,6 +115,9 @@ class SplashScreenState extends State<SplashScreen> with SingleTickerProviderSta
       HomePageInitialData.weatherStatus = prefs.getString("weatherStatus");
       HomePageInitialData.mainImage = prefs.getString("mainImage");
 
+      HomePageInitialData.hours = prefs.getStringList("hours");
+      HomePageInitialData.hoursTemp = prefs.getStringList("hoursTemp");
+
       HomePageInitialData.isDarkMode = prefs.getBool("isDarkMode");
 
       DrawerInitialData.lastUpdate = prefs.getString("lastUpdate");

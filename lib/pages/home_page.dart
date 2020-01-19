@@ -1,9 +1,11 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hava_negar/initial.dart';
 import 'package:hava_negar/pages/select_city.dart';
 import 'package:hava_negar/services/location_service.dart';
 import 'package:hava_negar/services/weather-service.dart';
+import 'package:hava_negar/utility/initial_data.dart';
 
 class HomePage extends StatelessWidget {
   String cityName, highTemp, lowTemp, temperature, weatherStatus;
@@ -33,7 +35,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     screenSize = MediaQuery.of(context).size;
 
     this.context = context;
@@ -291,6 +292,15 @@ class HomePage extends StatelessWidget {
   }
 
   _chart() {
+
+    List<FlSpot> spots = [];
+    int counter = 0;
+    print(HomePageInitialData.hoursTemp);
+    HomePageInitialData.hoursTemp.forEach((item){
+      spots.add(FlSpot(counter.ceilToDouble(), double.parse(item)));
+      counter++;
+    });
+
     return FlChart(
       chart: LineChart(
         LineChartData(
@@ -305,27 +315,29 @@ class HomePage extends StatelessWidget {
                   getTitles: (val) {
                     switch (val.toInt()) {
                       case 0:
-                        return '12';
+                        return HomePageInitialData.hours[0];
                       case 1:
-                        return '12';
+                        return HomePageInitialData.hours[1];
                       case 2:
-                        return '12';
+                        return HomePageInitialData.hours[2];
                       case 3:
-                        return '12';
+                        return HomePageInitialData.hours[3];
                       case 4:
-                        return '12';
+                        return HomePageInitialData.hours[4];
                       case 5:
-                        return '20';
+                        return HomePageInitialData.hours[5];
                       case 6:
-                        return '23';
+                        return HomePageInitialData.hours[6];
                       case 7:
-                        return '12';
+                        return HomePageInitialData.hours[7];
                       case 8:
-                        return '12';
+                        return HomePageInitialData.hours[8];
                       case 9:
-                        return '12';
+                        return HomePageInitialData.hours[9];
                       case 10:
-                        return '12';
+                        return HomePageInitialData.hours[10];
+                      case 11:
+                        return HomePageInitialData.hours[11];
                     }
                     return '';
                   }),
@@ -335,19 +347,7 @@ class HomePage extends StatelessWidget {
           ),
           lineBarsData: [
             LineChartBarData(
-              spots: [
-                FlSpot(0, 1),
-                FlSpot(1, 2),
-                FlSpot(2, 1.5),
-                FlSpot(3, 3),
-                FlSpot(4, 3.5),
-                FlSpot(5, 5),
-                FlSpot(6, 8),
-                FlSpot(7, 8),
-                FlSpot(8, 4),
-                FlSpot(9, 5),
-                FlSpot(10, 3),
-              ],
+              spots: spots,
               colors: isDarkMode ? [Colors.white70] : [Colors.grey[600]],
               isCurved: true,
               barWidth: 4,
