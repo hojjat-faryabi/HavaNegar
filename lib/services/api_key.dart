@@ -4,10 +4,13 @@ class ApiKey{
 // i use geocode.xyz api1
 
 
-  static String geoKey = "622f83be9bd643adb63e64202ebfd2fc";
+
+  // https://opencagedata.com/
+
+  static String geoKey = "";
 
 
 
-  static String weatherKey = "e573269fa5a324e904e68cc19256b02f";
+  static String weatherKey = "";
   // i use dark sky api
 }
